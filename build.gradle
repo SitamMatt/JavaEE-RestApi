@@ -26,6 +26,7 @@ dependencies {
     compile group: 'org.hibernate.javax.persistence', name: 'hibernate-jpa-2.1-api', version: '1.0.2.Final'
     runtime('com.h2database:h2:1.4.200')
     providedCompile group: 'javax', name: 'javaee-api', version: '8.0'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.1'
 
 
 
