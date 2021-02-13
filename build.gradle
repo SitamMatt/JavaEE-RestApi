@@ -25,6 +25,8 @@ dependencies {
     compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: '5.4.27.Final'
     compile group: 'org.hibernate.javax.persistence', name: 'hibernate-jpa-2.1-api', version: '1.0.2.Final'
     runtime('com.h2database:h2:1.4.200')
+    providedCompile group: 'javax', name: 'javaee-api', version: '8.0'
+
 
 
 
