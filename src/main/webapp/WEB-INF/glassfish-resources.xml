@@ -8,6 +8,6 @@
                           datasource-classname="org.h2.jdbcx.JdbcDataSource">
         <property name="user" value="sa"/>
         <property name="password" value=""/>
-        <property name="url" value="jdbc:h2:mem:hibernateExample"/>
+        <property name="url" value="jdbc:h2:tcp://localhost/~/test"/>
     </jdbc-connection-pool>
 </resources>

@@ -24,28 +24,19 @@ import java.util.UUID;
 public class TaskResource {
 
     @Inject
-    private TaskDao dao;
-
-    @Inject
     private TaskService taskService;
-//    @PersistenceContext(unitName = "Tasks", type = PersistenceContextType.TRANSACTION)
-//    private EntityManager entityManager;
-
-//    @Inject
-//    private TaskDao taskDao;
-
-//    @Transactional
 
     @GET
     public Response get(){
-        var tasks = dao.getAll();
+        var tasks = taskService.getAll();
         return Response.ok(tasks).build();
     }
 
     @GET
     @Path("{id}")
-    public Response get(@PathParam("id") int id){
-        var task = dao.get(id);
+    public Response get(@PathParam("id") String guid){
+        var parsedGuid= UUID.fromString(guid);
+        var task = taskService.get(parsedGuid);
         if(task == null) {
             return ResponseHelper.notFound();
         }
@@ -59,16 +50,17 @@ public class TaskResource {
         var result = taskService.create(task);
 
         UriBuilder uriBuilder = uriInfo.getAbsolutePathBuilder();
-        uriBuilder.path(Integer.toString(result.id));
+        uriBuilder.path(result.guid.toString());
 
         return Response.created(uriBuilder.build()).entity(result).build();
     }
 
     @PUT
     @Path("{id}")
-    public Response put(@PathParam("id") int id, Task task){
+    public Response put(@PathParam("id") String guid, Task task){
+        var parsedGuid= UUID.fromString(guid);
         task.setId(0);
-        dao.update(id, task);
+//        dao.update(id, task);
         return Response.ok().build();
     }
 
@@ -83,9 +75,10 @@ public class TaskResource {
 
     @DELETE
     @Path("{id}")
-    public Response delete(@PathParam("id") int id){
-        var task = dao.get(id);
-        dao.delete(task);
-        return Response.ok().build();
+    public Response delete(@PathParam("id") String guid){
+        var parsedGuid= UUID.fromString(guid);
+        taskService.delete(parsedGuid);
+
+        return Response.noContent().build();
     }
 }

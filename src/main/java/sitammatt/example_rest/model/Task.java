@@ -1,17 +1,14 @@
 package sitammatt.example_rest.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.UUID;
 
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "TASK")
-public class Task implements Serializable {
-    public Task() {
-    }
+public class Task extends BaseEntity implements Serializable {
 
     @Id
     @GeneratedValue
@@ -19,6 +16,13 @@ public class Task implements Serializable {
 
     private String title;
     private String description;
+
+    public Task() {
+    }
+
+    public Task(@NotNull UUID guid) {
+        super(guid);
+    }
 
     public String getDescription() {
         return description;
@@ -42,15 +46,5 @@ public class Task implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public Task(String title) {
-        this.title = title;
-    }
-
-    public Task(Integer id, String title, String description) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
     }
 }

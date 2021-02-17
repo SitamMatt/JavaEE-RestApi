@@ -1,7 +1,8 @@
 package sitammatt.example_rest.dto;
 
-public class TaskDto {
-    public Integer id;
+import java.util.UUID;
+
+public class TaskDto extends BaseDto{
     public String title;
     public String description;
 }

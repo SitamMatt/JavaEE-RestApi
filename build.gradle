@@ -2,6 +2,9 @@ plugins {
     id 'java'
     id 'war'
     id 'org.jetbrains.kotlin.jvm' version '1.4.30'
+    id 'eclipse'
+    id "com.github.roroche.plantuml" version "1.0.2" // (1)
+    id "org.fmiw.plantuml" version "0.1"
 }
 
 group 'sitammatt'
@@ -27,14 +30,37 @@ dependencies {
     runtime('com.h2database:h2:1.4.200')
     providedCompile group: 'javax', name: 'javaee-api', version: '8.0'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.1'
+    implementation 'org.mapstruct:mapstruct:1.4.2.Final'
 
-
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
 
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
     compile 'org.hamcrest:hamcrest-core:2.2'
+}
+
+plantuml {
+    options {
+        outputDir = project.file('diagrams') // (2)
+    }
+
+    diagrams {
+        classes {
+            sourceFile = project.file('diagrams/class_diagram.plantuml') // (3)
+        }
+    }
+}
+
+generateDiagramClasses.dependsOn(buildClassDiagram) // (4)
+
+classDiagram { // (1)
+    packageName = "sitammatt.example_rest" // (2)
+    outputFile = project.file('diagrams/class_diagram.plantuml') // (3)
+    // outputFile = new File("${projectDir}/diagrams/class_diagram.plantuml") // (4)
+    ignoredClasses = [ // (5)
+    ]
 }
 
 test {

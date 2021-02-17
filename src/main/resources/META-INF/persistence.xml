@@ -5,13 +5,11 @@
     <persistence-unit name="Tasks" transaction-type="JTA">
         <!-- Persistence provider -->
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <!-- Data source -->
+        <jta-data-source>java:app/jdbc/hibernate</jta-data-source>
         <!-- Entity classes -->
         <class>sitammatt.example_rest.model.Task</class>
         <properties>
-            <property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />
-            <property name="javax.persistence.jdbc.url"    value="jdbc:h2:tcp://localhost/~/test" />
-            <property name="javax.persistence.jdbc.user" value="sa" />
-            <property name="javax.persistence.jdbc.password" value="" />
             <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
             <property name="hibernate.hbm2ddl.auto" value="update" />
             <property name="show_sql" value="true"/>
