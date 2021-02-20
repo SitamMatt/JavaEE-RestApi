@@ -3,11 +3,8 @@ package sitammatt.example_rest.services;
 import sitammatt.example_rest.dao.TaskDao;
 import sitammatt.example_rest.dto.TaskDto;
 import sitammatt.example_rest.mappers.TaskMapper;
-import sitammatt.example_rest.model.Task;
 
 import javax.inject.Inject;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -27,8 +24,7 @@ public class TaskService {
     }
 
     public TaskDto create(TaskDto task){
-        var entity = new Task(UUID.randomUUID());
-        TaskMapper.INSTANCE.mapToEntity(task, entity);
+        var entity = TaskMapper.INSTANCE.mapToEntity(task);
 
         taskDao.add(entity);
 

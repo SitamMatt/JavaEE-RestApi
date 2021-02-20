@@ -13,13 +13,11 @@ public interface TaskMapper {
 
     TaskDto mapToDto(Task task);
 
-    @Mapping(target = "id", ignore = true)
     @Mapping(target = "guid", ignore = true)
     @Mapping(target = "createdDate", ignore = true)
     @Mapping(target = "modifiedDate", ignore = true)
     Task mapToEntity(TaskDto task);
 
-    @Mapping(target = "id", ignore = true)
     @Mapping(target = "guid", ignore = true)
     @Mapping(target = "createdDate", ignore = true)
     @Mapping(target = "modifiedDate", ignore = true)

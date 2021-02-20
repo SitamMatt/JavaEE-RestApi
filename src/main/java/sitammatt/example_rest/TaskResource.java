@@ -2,16 +2,12 @@ package sitammatt.example_rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import sitammatt.example_rest.Utils.ResponseHelper;
-import sitammatt.example_rest.dao.TaskDao;
-import sitammatt.example_rest.dto.ErrorDto;
 import sitammatt.example_rest.dto.TaskDto;
 import sitammatt.example_rest.model.Task;
 import sitammatt.example_rest.services.TaskService;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.persistence.*;
-import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.io.IOException;
@@ -34,9 +30,9 @@ public class TaskResource {
 
     @GET
     @Path("{id}")
-    public Response get(@PathParam("id") String guid){
-        var parsedGuid= UUID.fromString(guid);
-        var task = taskService.get(parsedGuid);
+    public Response get(@PathParam("id") String id){
+        var guid= UUID.fromString(id);
+        var task = taskService.get(guid);
         if(task == null) {
             return ResponseHelper.notFound();
         }
@@ -57,10 +53,10 @@ public class TaskResource {
 
     @PUT
     @Path("{id}")
-    public Response put(@PathParam("id") String guid, Task task){
-        var parsedGuid= UUID.fromString(guid);
-        task.setId(0);
-//        dao.update(id, task);
+    public Response put(@PathParam("id") String id, TaskDto task){
+        var guid= UUID.fromString(id);
+
+        taskService.update(guid, task);
         return Response.ok().build();
     }
 

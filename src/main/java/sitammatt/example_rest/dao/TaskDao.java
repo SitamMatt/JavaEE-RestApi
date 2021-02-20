@@ -11,11 +11,7 @@ public class TaskDao {
     @PersistenceContext(unitName = "Tasks", type = PersistenceContextType.TRANSACTION)
     private EntityManager em;
 
-//    private final EntityManager em;
-
     public TaskDao() {
-//        EntityManagerFactory emf = Persistence.createEntityManagerFactory("Tasks");
-//        em = emf.createEntityManager();
     }
 
     public List<Task> getAll(){
@@ -23,13 +19,7 @@ public class TaskDao {
     }
 
     public Task get(UUID guid){
-        try{
-            var query = em.createQuery("FROM Task WHERE guid = ?1", Task.class);
-            query.setParameter(1, guid);
-            return query.getSingleResult();
-        }catch(NoResultException ex){
-            return null;
-        }
+        return em.find(Task.class, guid);
     }
 
     public void add(Task task){
@@ -38,7 +28,6 @@ public class TaskDao {
 
     public void update(Task task){
         em.merge(task);
-//        em.re(task); todo
     }
 
     public void delete(Task task){

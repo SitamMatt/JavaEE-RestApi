@@ -1,5 +1,7 @@
 package sitammatt.example_rest.model;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -17,7 +19,12 @@ public class BaseEntity {
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date modifiedDate;
 
-    @NotNull
+    @Id
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
     @Column(name = "guid", unique = true, nullable = false, updatable = false)
     private UUID guid;
 
@@ -29,10 +36,6 @@ public class BaseEntity {
     @PreUpdate
     public void initModificationDate() {
         modifiedDate = new Date();
-    }
-
-    public BaseEntity(@NotNull UUID guid) {
-        this.guid = guid;
     }
 
     public BaseEntity() {

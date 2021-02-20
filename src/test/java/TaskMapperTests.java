@@ -16,7 +16,6 @@ public class TaskMapperTests {
         Task task = new Task();
         task.setDescription("aaa");
         task.setTitle("tit");
-        task.setId(5);
         task.setGuid(UUID.fromString("fbcd2e0a-85fd-4e9d-8245-9efae5d587a8"));
         SimpleDateFormat formatter = new SimpleDateFormat("dd-M-yyyy hh:mm:ss a", Locale.ENGLISH);
 
@@ -57,7 +56,6 @@ public class TaskMapperTests {
         Task task = new Task();
         task.setDescription("bbb");
         task.setTitle("iti");
-        task.setId(5);
         task.setGuid(UUID.fromString("108a3acf-f72d-4884-b103-ea18a0f03542"));
 
         String createdDateString2 = "22-01-2013 10:15:55 AM";
@@ -70,7 +68,6 @@ public class TaskMapperTests {
 
         mapper.mapToEntity(dto, task);
 
-        Assertions.assertEquals(task.getId(), 5);
         Assertions.assertEquals(task.getTitle(), "tit");
         Assertions.assertEquals(task.getDescription(), "aaa");
         Assertions.assertEquals(task.getGuid(), UUID.fromString("108a3acf-f72d-4884-b103-ea18a0f03542"));
