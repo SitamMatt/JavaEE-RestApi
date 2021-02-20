@@ -1,4 +1,4 @@
-package sitammatt.example_rest.Utils;
+package sitammatt.example_rest.utils;
 
 import sitammatt.example_rest.dto.ErrorDto;
 

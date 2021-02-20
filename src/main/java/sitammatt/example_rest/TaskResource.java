@@ -1,6 +1,6 @@
 package sitammatt.example_rest;
 
-import sitammatt.example_rest.Utils.ResponseHelper;
+import sitammatt.example_rest.utils.ResponseHelper;
 import sitammatt.example_rest.dto.TaskDto;
 import sitammatt.example_rest.services.TaskService;
 
