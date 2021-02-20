@@ -15,7 +15,7 @@ public class TaskDao {
     }
 
     public List<Task> getAll(){
-        return em.createQuery("from Task").getResultList();
+        return em.createQuery("from Task", Task.class).getResultList();
     }
 
     public Task get(UUID guid){

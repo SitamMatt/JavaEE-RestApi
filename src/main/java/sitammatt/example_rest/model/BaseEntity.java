@@ -15,7 +15,7 @@ public class BaseEntity {
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date createdDate;
 
-    @Column(name = "modificationDate", nullable = true, updatable = true)
+    @Column(name = "modificationDate")
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date modifiedDate;
 

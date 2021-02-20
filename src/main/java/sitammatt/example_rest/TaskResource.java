@@ -1,18 +1,13 @@
 package sitammatt.example_rest;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import sitammatt.example_rest.Utils.ResponseHelper;
 import sitammatt.example_rest.dto.TaskDto;
-import sitammatt.example_rest.model.Task;
 import sitammatt.example_rest.services.TaskService;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Map;
 import java.util.UUID;
 
 @Stateless
@@ -53,21 +48,26 @@ public class TaskResource {
 
     @PUT
     @Path("{id}")
-    public Response put(@PathParam("id") String id, TaskDto task){
+    public Response put(@PathParam("id") String id, TaskDto task, @Context UriInfo uriInfo){
         var guid= UUID.fromString(id);
 
-        taskService.update(guid, task);
-        return Response.ok().build();
+        var result = taskService.update(guid, task);
+
+        UriBuilder uriBuilder = uriInfo.getAbsolutePathBuilder();
+        uriBuilder.path(result.guid.toString());
+
+        return Response.created(uriBuilder.build()).entity(result).build();
     }
 
-    @PATCH
-    @Path("{id}")
-    public Response patch(@PathParam("id") int id, InputStream entity) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        Map<String, String> map = mapper.readValue(entity, Map.class);
-
-        return Response.ok().build();
-    }
+    // todo implement patch endpoint
+//    @PATCH
+//    @Path("{id}")
+//    public Response patch(@PathParam("id") int id, InputStream entity) throws IOException {
+//        ObjectMapper mapper = new ObjectMapper();
+//        Map<String, String> map = mapper.readValue(entity, Map.class);
+//
+//        return Response.ok().build();
+//    }
 
     @DELETE
     @Path("{id}")

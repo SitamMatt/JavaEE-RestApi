@@ -14,7 +14,7 @@ public class TaskService {
     private TaskDao taskDao;
 
     public List<TaskDto> getAll(){
-        return taskDao.getAll().stream().map(x -> TaskMapper.INSTANCE.mapToDto(x)).collect(Collectors.toList());
+        return taskDao.getAll().stream().map(TaskMapper.INSTANCE::mapToDto).collect(Collectors.toList());
     }
 
     public TaskDto get(UUID guid){
