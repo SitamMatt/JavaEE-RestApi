@@ -1,5 +1,6 @@
 package sitammatt.example_rest;
 
+import sitammatt.example_rest.dto.TaskPatchDto;
 import sitammatt.example_rest.utils.ResponseHelper;
 import sitammatt.example_rest.dto.TaskDto;
 import sitammatt.example_rest.services.TaskService;
@@ -60,14 +61,15 @@ public class TaskResource {
     }
 
     // todo implement patch endpoint
-//    @PATCH
-//    @Path("{id}")
-//    public Response patch(@PathParam("id") int id, InputStream entity) throws IOException {
+    @PATCH
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("{id}")
+    public Response patch(@PathParam("id") int id, TaskPatchDto patch) {
 //        ObjectMapper mapper = new ObjectMapper();
 //        Map<String, String> map = mapper.readValue(entity, Map.class);
-//
-//        return Response.ok().build();
-//    }
+
+        return Response.ok().build();
+    }
 
     @DELETE
     @Path("{id}")
