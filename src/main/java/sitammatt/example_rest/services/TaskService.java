@@ -2,6 +2,7 @@ package sitammatt.example_rest.services;
 
 import sitammatt.example_rest.dao.TaskDao;
 import sitammatt.example_rest.dto.TaskDto;
+import sitammatt.example_rest.dto.TaskPatchDto;
 import sitammatt.example_rest.mappers.TaskMapper;
 
 import javax.inject.Inject;
@@ -43,5 +44,14 @@ public class TaskService {
     public void delete(UUID guid){
         var entity = taskDao.get(guid);
         taskDao.delete(entity);
+    }
+
+    public TaskDto patch(UUID guid, TaskPatchDto patch) {
+        var entity = taskDao.get(guid);
+        TaskMapper.INSTANCE.mapToEntity(patch, entity);
+
+        taskDao.update(entity);
+
+        return TaskMapper.INSTANCE.mapToDto(entity);
     }
 }

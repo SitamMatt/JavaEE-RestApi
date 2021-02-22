@@ -49,33 +49,30 @@ public class TaskResource {
 
     @PUT
     @Path("{id}")
-    public Response put(@PathParam("id") String id, TaskDto task, @Context UriInfo uriInfo){
+    public Response put(@PathParam("id") String id, TaskDto task){
         var guid= UUID.fromString(id);
 
         var result = taskService.update(guid, task);
 
-        UriBuilder uriBuilder = uriInfo.getAbsolutePathBuilder();
-        uriBuilder.path(result.guid.toString());
-
-        return Response.created(uriBuilder.build()).entity(result).build();
+        return Response.ok().entity(result).build();
     }
 
-    // todo implement patch endpoint
     @PATCH
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("{id}")
-    public Response patch(@PathParam("id") int id, TaskPatchDto patch) {
-//        ObjectMapper mapper = new ObjectMapper();
-//        Map<String, String> map = mapper.readValue(entity, Map.class);
+    public Response patch(@PathParam("id") String id, TaskPatchDto patch) {
+        var guid= UUID.fromString(id);
 
-        return Response.ok().build();
+        var result = taskService.patch(guid, patch);
+
+        return Response.ok().entity(result).build();
     }
 
     @DELETE
     @Path("{id}")
-    public Response delete(@PathParam("id") String guid){
-        var parsedGuid= UUID.fromString(guid);
-        taskService.delete(parsedGuid);
+    public Response delete(@PathParam("id") String id){
+        var guid= UUID.fromString(id);
+        taskService.delete(guid);
 
         return Response.noContent().build();
     }
