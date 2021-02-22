@@ -37,6 +37,7 @@ public class TaskService {
         TaskMapper.INSTANCE.mapToEntity(task, entity);
 
         taskDao.update(entity);
+        taskDao.commit();
 
         return TaskMapper.INSTANCE.mapToDto(entity);
     }

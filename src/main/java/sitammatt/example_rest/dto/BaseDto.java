@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.UUID;
 
 public class BaseDto {
-    public Date createdDate;
-    public Date modifiedDate;
+    public String createdDate;
+    public String modifiedDate;
     public UUID guid;
 }

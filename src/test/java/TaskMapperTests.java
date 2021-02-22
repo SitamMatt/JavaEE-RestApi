@@ -31,11 +31,13 @@ public class TaskMapperTests {
 
         var dto = mapper.mapToDto(task);
 
+        var formatter2 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX");
+
         Assertions.assertEquals(task.getGuid(), dto.guid);
         Assertions.assertEquals(task.getTitle(), dto.title);
         Assertions.assertEquals(task.getDescription(), dto.description);
-        Assertions.assertEquals(task.getCreatedDate(), dto.createdDate);
-        Assertions.assertEquals(task.getModifiedDate(), dto.modifiedDate);
+        Assertions.assertEquals(task.getCreatedDate(), formatter2.parse(dto.createdDate));
+        Assertions.assertEquals(task.getModifiedDate(), formatter2.parse(dto.modifiedDate));
     }
 
     @Test
@@ -48,11 +50,9 @@ public class TaskMapperTests {
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd-M-yyyy hh:mm:ss a", Locale.ENGLISH);
 
-        String createdDateString = "22-01-2015 10:15:55 AM";
-        dto.createdDate = formatter.parse(createdDateString);
+        dto.createdDate = "22-01-2015 10:15:55 AM";
 
-        String modifiedDateString = "24-06-2016 12:35:40 AM";
-        dto.modifiedDate = formatter.parse(modifiedDateString);
+        dto.modifiedDate = "24-06-2016 12:35:40 AM";
 
         // entity
         Task task = new Task();

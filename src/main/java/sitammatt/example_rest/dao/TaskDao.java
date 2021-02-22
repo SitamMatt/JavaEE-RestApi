@@ -33,4 +33,8 @@ public class TaskDao {
     public void delete(Task task){
         em.remove(task);
     }
+
+    public void commit(){
+        em.flush();
+    }
 }
