@@ -110,4 +110,46 @@ public class TaskResourceTests {
 
         Assertions.assertTrue(date.before(formatter.parse(body.modifiedDate)));
     }
+
+    @Test
+    public void successfulTaskPatchTest() throws ParseException {
+        var model = new TaskDto();
+        model.title = "Pranie";
+        model.description = "Zrobić pranie";
+
+        var response1 = given().relaxedHTTPSValidation()
+                .contentType("application/json")
+                .body(model)
+                .when()
+                .post("/tasks");
+        response1.then()
+                .statusCode(201)
+                .header("Location", notNullValue());
+
+        var guid = response1.body().as(TaskDto.class).guid;
+
+        var model2 = "{\n" +
+                "    \"title\": \"Zadanie\"" +
+                "}";
+
+        var date = new Date();
+
+        var response2 = given().relaxedHTTPSValidation()
+                .contentType("application/json")
+                .body(model2)
+                .when()
+                .patch("/tasks/" + guid);
+        response2.then()
+                .contentType("application/json")
+                .statusCode(200);
+
+        var body = response2.body().as(TaskDto.class);
+
+        Assertions.assertEquals("Zrobić pranie", body.description);
+        Assertions.assertEquals("Zadanie", body.title);
+
+        var formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX");
+
+        Assertions.assertTrue(date.before(formatter.parse(body.modifiedDate)));
+    }
 }
