@@ -3,6 +3,7 @@ package http.api;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.*;
 import sitammatt.example_rest.dto.TaskDto;
+import sitammatt.example_rest.dto.UserDto;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,7 +14,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 // IMPORTANT! Test requires rest api server to be running
-public class TaskResourceTests {
+public class UserResourceTests {
 
     @BeforeAll
     static void setup() {
@@ -22,15 +23,14 @@ public class TaskResourceTests {
 
     @Test
     public void successfulTaskCreationTest(){
-        var model = new TaskDto();
-        model.title = "Pranie";
-        model.description = "Zrobić pranie";
+        var model = new UserDto();
+        model.login = "Jaca";
 
         var response = given().relaxedHTTPSValidation()
                 .contentType("application/json")
                 .body(model)
                 .when()
-                .post("/tasks");
+                .post("/users");
         response.then()
                 .statusCode(201)
                 .header("Location", notNullValue());
@@ -38,58 +38,56 @@ public class TaskResourceTests {
 
     @Test
     public void successfulTaskRemovalTest(){
-        var model = new TaskDto();
-        model.title = "Pranie";
-        model.description = "Zrobić pranie";
+        var model = new UserDto();
+        model.login = "Jaca";
 
         var response1 = given().relaxedHTTPSValidation()
                 .contentType("application/json")
                 .body(model)
                 .when()
-                .post("/tasks");
+                .post("/users");
         response1.then()
                 .statusCode(201)
                 .header("Location", notNullValue());
 
-        var guid = response1.body().as(TaskDto.class).guid;
+        var guid = response1.body().as(UserDto.class).guid;
 
         var response2 = given().relaxedHTTPSValidation()
                 .when()
-                .get("/tasks/" + guid);
+                .get("/users/" + guid);
         response2.then()
                 .statusCode(200);
 
         var response3 = given().relaxedHTTPSValidation()
                 .when()
-                .delete("/tasks/" + guid);
+                .delete("/users/" + guid);
         response3.then()
                 .statusCode(204);
 
         var response4 = given().relaxedHTTPSValidation()
                 .when()
-                .get("/tasks/" + guid);
+                .get("/users/" + guid);
         response4.then()
                 .statusCode(404);
     }
 
     @Test
     public void successfulTaskUpdateTest() throws ParseException {
-        var model = new TaskDto();
-        model.title = "Pranie";
-        model.description = "Zrobić pranie";
+        var model = new UserDto();
+        model.login = "Jaca";
 
         var response1 = given().relaxedHTTPSValidation()
                 .contentType("application/json")
                 .body(model)
                 .when()
-                .post("/tasks");
+                .post("/users");
         response1.then()
                 .statusCode(201)
                 .header("Location", notNullValue());
 
-        var guid = response1.body().as(TaskDto.class).guid;
+        var guid = response1.body().as(UserDto.class).guid;
 
-        model.description = "Zrobić pranie i wywiesić je";
+        model.login = "Sitam";
 
         var formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX");
         var date = formatter.parse(formatter.format(new Date()));
@@ -98,56 +96,14 @@ public class TaskResourceTests {
                 .contentType("application/json")
                 .body(model)
                 .when()
-                .put("/tasks/" + guid);
+                .put("/users/" + guid);
         response2.then()
                 .contentType("application/json")
                 .statusCode(200);
 
-        var body = response2.body().as(TaskDto.class);
+        var body = response2.body().as(UserDto.class);
 
-        Assertions.assertEquals("Zrobić pranie i wywiesić je", body.description);
-        Assertions.assertEquals("Pranie", body.title);
-
-        assertThat(date, anyOf(lessThanOrEqualTo(formatter.parse(body.modifiedDate))));
-    }
-
-    @Test
-    public void successfulTaskPatchTest() throws ParseException {
-        var model = new TaskDto();
-        model.title = "Pranie";
-        model.description = "Zrobić pranie";
-
-        var response1 = given().relaxedHTTPSValidation()
-                .contentType("application/json")
-                .body(model)
-                .when()
-                .post("/tasks");
-        response1.then()
-                .statusCode(201)
-                .header("Location", notNullValue());
-
-        var guid = response1.body().as(TaskDto.class).guid;
-
-        var model2 = "{\n" +
-                "    \"title\": \"Zadanie\"" +
-                "}";
-
-        var formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX");
-        var date = formatter.parse(formatter.format(new Date()));
-
-        var response2 = given().relaxedHTTPSValidation()
-                .contentType("application/json")
-                .body(model2)
-                .when()
-                .patch("/tasks/" + guid);
-        response2.then()
-                .contentType("application/json")
-                .statusCode(200);
-
-        var body = response2.body().as(TaskDto.class);
-
-        Assertions.assertEquals("Zrobić pranie", body.description);
-        Assertions.assertEquals("Zadanie", body.title);
+        Assertions.assertEquals("Sitam", body.login);
 
         assertThat(date, anyOf(lessThanOrEqualTo(formatter.parse(body.modifiedDate))));
     }

@@ -1,4 +1,4 @@
-package sitammatt.example_rest;
+package sitammatt.example_rest.controllers;
 
 import sitammatt.example_rest.dto.TaskPatchDto;
 import sitammatt.example_rest.utils.ResponseHelper;

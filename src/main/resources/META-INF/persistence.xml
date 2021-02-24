@@ -9,6 +9,7 @@
         <jta-data-source>java:app/jdbc/hibernate</jta-data-source>
         <!-- Entity classes -->
         <class>sitammatt.example_rest.model.Task</class>
+        <class>sitammatt.example_rest.model.User</class>
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
             <!-- -->

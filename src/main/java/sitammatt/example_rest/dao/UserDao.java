@@ -1,12 +1,12 @@
 package sitammatt.example_rest.dao;
 
-import sitammatt.example_rest.model.Task;
+import sitammatt.example_rest.model.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
 
-public class TaskDao extends BaseDao<Task>{
+public class UserDao extends BaseDao<User>{
 
     @PersistenceContext(unitName = "Tasks", type = PersistenceContextType.TRANSACTION)
     private EntityManager em;
@@ -16,7 +16,7 @@ public class TaskDao extends BaseDao<Task>{
         return em;
     }
 
-    public TaskDao() {
-        entityClass = Task.class;
+    public UserDao() {
+        entityClass = User.class;
     }
 }

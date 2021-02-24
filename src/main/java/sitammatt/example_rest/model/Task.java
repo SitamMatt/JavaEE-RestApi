@@ -1,14 +1,12 @@
 package sitammatt.example_rest.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "TASK")
+@NamedQuery(name = "Task.findAll", query = "SELECT t FROM Task t")
 public class Task extends BaseEntity implements Serializable {
 
     private String title;
