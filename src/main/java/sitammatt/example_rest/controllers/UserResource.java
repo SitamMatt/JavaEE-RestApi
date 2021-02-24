@@ -1,7 +1,5 @@
 package sitammatt.example_rest.controllers;
 
-import sitammatt.example_rest.dto.TaskDto;
-import sitammatt.example_rest.dto.TaskPatchDto;
 import sitammatt.example_rest.dto.UserDto;
 import sitammatt.example_rest.services.UserService;
 import sitammatt.example_rest.utils.ResponseHelper;
@@ -57,17 +55,6 @@ public class UserResource {
 
         return Response.ok().entity(result).build();
     }
-
-//    @PATCH
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    @Path("{id}")
-//    public Response patch(@PathParam("id") String id, TaskPatchDto patch) {
-//        var guid= UUID.fromString(id);
-//
-//        var result = userService.patch(guid, patch);
-//
-//        return Response.ok().entity(result).build();
-//    }
 
     @DELETE
     @Path("{id}")

@@ -1,7 +1,6 @@
 package sitammatt.example_rest.dao;
 
 import sitammatt.example_rest.model.BaseEntity;
-import sitammatt.example_rest.model.Task;
 
 import javax.persistence.EntityManager;
 import java.util.List;

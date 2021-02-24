@@ -2,7 +2,6 @@ package http.api;
 
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.*;
-import sitammatt.example_rest.dto.TaskDto;
 import sitammatt.example_rest.dto.UserDto;
 
 import java.text.ParseException;
