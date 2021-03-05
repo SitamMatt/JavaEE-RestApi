@@ -1,5 +1,6 @@
 package sitammatt.example_rest.controllers;
 
+import org.jinq.jpa.JinqJPAStreamProvider;
 import sitammatt.example_rest.dto.TaskPatchDto;
 import sitammatt.example_rest.utils.ResponseHelper;
 import sitammatt.example_rest.dto.TaskDto;

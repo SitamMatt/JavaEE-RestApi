@@ -8,32 +8,36 @@ import java.util.UUID;
 
 public abstract class BaseDao<T extends BaseEntity> {
 
-    protected abstract EntityManager getEntityManager();
-
+    protected EntityManager em;
     protected Class<T> entityClass;
+
+    public BaseDao(EntityManager em, Class<T> entityClass) {
+        this.em = em;
+        this.entityClass = entityClass;
+    }
 
     public List<T> getAll(){
         var queryName = entityClass.getSimpleName() + ".findAll";
-        return getEntityManager().createNamedQuery(queryName, entityClass).getResultList();
+        return em.createNamedQuery(queryName, entityClass).getResultList();
     }
 
     public T get(UUID guid){
-        return getEntityManager().find(entityClass, guid);
+        return em.find(entityClass, guid);
     }
 
     public void add(T entity){
-        getEntityManager().persist(entity);
+        em.persist(entity);
     }
 
     public void update(T entity){
-        getEntityManager().merge(entity);
+        em.merge(entity);
     }
 
     public void delete(T entity){
-        getEntityManager().remove(entity);
+        em.remove(entity);
     }
 
     public void commit(){
-        getEntityManager().flush();
+        em.flush();
     }
 }

@@ -35,6 +35,9 @@ dependencies {
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
     testImplementation 'io.rest-assured:rest-assured:4.3.3'
 
+    implementation group: 'org.jinq', name: 'jinq-jpa', version: '1.8.32'
+
+
 
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
