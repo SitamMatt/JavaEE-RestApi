@@ -1,0 +1,99 @@
+@startuml
+
+class "BaseDto" {
+  createdDate : Date
+  modifiedDate : Date
+  guid : UUID
+}
+
+class "BaseEntity" {
+  createdDate : Date
+  modifiedDate : Date
+  guid : UUID
+  initCreationDate()
+  initModificationDate()
+}
+
+class "CorsFilter" {
+  filter(ContainerRequestContext, ContainerResponseContext)
+}
+
+class "ErrorDto" {
+  Status : int
+  Message : String
+}
+
+class "HelloApplication"
+
+class "Klass" {
+  a : int
+}
+
+class "ResponseHelper"
+
+class "Task" {
+  id : Integer
+  title : String
+  description : String
+}
+
+class "TaskDao" {
+  em : EntityManager
+  add(Task)
+  delete(Task)
+  get(UUID) : Task
+  update(Task)
+}
+
+class "TaskDto" {
+  title : String
+  description : String
+}
+
+interface "TaskMapper" {
+  mapToDto(Task) : TaskDto
+  mapToEntity(TaskDto, Task)
+  mapToEntity(TaskDto) : Task
+}
+
+class "TaskMapperImpl" {
+  mapToDto(Task) : TaskDto
+  mapToEntity(TaskDto, Task)
+  mapToEntity(TaskDto) : Task
+}
+
+class "TaskResource" {
+  dao : TaskDao
+  taskService : TaskService
+  delete(String) : Response
+  get(String) : Response
+  get() : Response
+  patch(int, InputStream) : Response
+  post(TaskDto, UriInfo) : Response
+  put(String, Task) : Response
+}
+
+class "TaskService" {
+  taskDao : TaskDao
+  create(TaskDto) : TaskDto
+  delete(UUID)
+  get(UUID) : TaskDto
+  update(UUID, TaskDto) : TaskDto
+}
+
+"BaseDto" <|-- "TaskDto"
+"BaseEntity" <|-- "Task"
+"TaskDao" --> "Task" : use
+"TaskMapperImpl" --> "Task" : use
+"TaskMapperImpl" --> "TaskDto" : use
+"TaskMapper" --> "Task" : use
+"TaskMapper" --> "TaskDto" : use
+"TaskMapper" <|-- "TaskMapperImpl"
+"TaskResource" --> "Task" : use
+"TaskResource" --> "TaskDao" : dao
+"TaskResource" --> "TaskDto" : use
+"TaskResource" --> "TaskService" : taskService
+"TaskService" --> "TaskDao" : taskDao
+"TaskService" --> "TaskDto" : use
+
+@enduml

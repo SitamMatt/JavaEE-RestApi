@@ -37,11 +37,20 @@ dependencies {
 
     implementation group: 'org.jinq', name: 'jinq-jpa', version: '1.8.32'
 
+    testImplementation group: 'org.jboss.arquillian', name: 'arquillian-bom', version: '1.6.0.Final', ext: 'pom'
+    testImplementation group: 'org.jboss.arquillian.junit', name: 'arquillian-junit-container', version: '1.6.0.Final'
+    testImplementation group: 'org.jboss.arquillian.extension', name: 'arquillian-persistence-dbunit', version: '1.0.0.Alpha7'
+    testImplementation group: 'org.jboss.arquillian.container', name: 'arquillian-glassfish-embedded-3.1', version: '1.0.2'
+    testImplementation group: 'fish.payara.extras', name: 'payara-embedded-all', version: '5.2021.1'
+    testImplementation group: 'junit', name: 'junit', version: '4.13.2'
+    testImplementation group: 'com.h2database', name: 'h2', version: '1.4.200'
 
 
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+//    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+    testRuntime("org.junit.vintage:junit-vintage-engine:5.2.0")
+
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
     compile 'org.hamcrest:hamcrest-core:2.2'
 }
